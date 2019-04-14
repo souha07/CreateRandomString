@@ -83,6 +83,10 @@ private
                     wordList = ('0'..'9').to_a + ('a'..'f').to_a
                 when 'H' then
                     wordList = ('0'..'9').to_a + ('A'..'F').to_a
+                when 'm' then
+                    wordList = ( '!"#$%&\'=~|-^\@;:/\`+*?_' ).split("")
+                when 'M' then
+                    wordList = ( '!"#$%&\'=~|-^\@;:/\`+*?_' ).split("") + ( "(){}[]<>" ).split("")
                 when 's' then
                     wordList = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a
                 when '%' then

@@ -77,10 +77,14 @@ private
                 # 生成タイプの取得（取得すべきランダム配列の取得)
                 wordList = nil
                 case format[pos, 1]
-                when 's' then
-                    wordList = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a
                 when 'd' then
                     wordList = ('0'..'9').to_a
+                when 'h' then
+                    wordList = ('0'..'9').to_a + ('a'..'f').to_a
+                when 'H' then
+                    wordList = ('0'..'9').to_a + ('A'..'F').to_a
+                when 's' then
+                    wordList = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a
                 when '%' then
                     wordList = ('%').to_a
                 else

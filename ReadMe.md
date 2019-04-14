@@ -1,3 +1,27 @@
-# CreateRandomString 
+# CreateRandomString 簡単説明書
 
-printf風ランダム文字列生成
+## 概要
+
+printf風ランダム文字列生成  
+
+## フォーマット指定について
+
+現状想定しているフォーマットは以下のとおりとなります。 
+
+- %d : 0-9までの数字 
+- %s : A-Z, a-z, 0-9までの英数字
+- %% : %文字
+  
+指定方法は以下のサンプル参照
+
+## サンプル
+
+> "UserName : %8s"
+>> 結果
+>> UserName : zvw9KN0T
+>> UserName : jbSEBSyk
+
+> "%3d-%4d"
+>> 結果
+>> 315-4405
+>> 457-1105

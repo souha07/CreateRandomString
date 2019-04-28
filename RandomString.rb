@@ -33,24 +33,16 @@ private
                 # %指定時の各種処理
                 pos += 1
 
-                # 生成文字数の取得
-                idx = format.index(  /[^0-9]/, pos )
-                if idx == nil then
+                str, nextPos = ParseSpecialWord( format[pos, format.length] )
+                if nextPos == nil then
                     # エラー時
                     puts "%指定後の数値指定が不正 : #{format} : pos : #{pos}"
                     isError = true
                     return
                 end
 
-                # 基本的に意味のない%0sなどの指定は不可(最低1は保証させる)
-                num = [1, format[pos, idx - pos].to_i].max
-                pos += idx - pos
-
-                # 生成タイプの取得
-                specifier = format[pos, 1]
-                (0...num).each { || output += "%#{specifier}" }
-                pos += specifier.length
-
+                output += str
+                pos += nextPos
                 next
             end
             
@@ -59,6 +51,25 @@ private
         end
 
         return output
+    end
+
+	# %指定の特殊文字算出
+    def ParseSpecialWord( str )
+        # 生成文字数の取得
+        idx = str.index(  /[^0-9]/, 0 )
+        return [nil, 0] if idx == nil
+
+        # 基本的に意味のない%0sなどの指定は不可(最低1は保証させる)
+        num = [1, str[0, idx].to_i].max
+        pos = idx
+
+        # 生成タイプの取得
+        output = ""
+        specifier = str[pos, 1]
+        (0...num).each { || output += "%#{specifier}" }
+        pos += specifier.length
+        
+        return [output, pos]
     end
 
 

@@ -8,6 +8,8 @@ class StringToken
         TYPE_ERROR = 'error'.freeze     # エラー
         TYPE_NONE = 'none'.freeze       # 通常文字列
         TYPE_PERCENT = ''.freeze        # (指定時は%%とするため、文字列が存在しない場合は%指定となる)
+        TYPE_BIT = 'b'.freeze           # 2進数
+        TYPE_OCTAL = 'o'.freeze         # 8進数
         TYPE_DIGIT = 'd'.freeze         # 10進数
         TYPE_HEX_UPPER = 'H'.freeze     # 16進数(大文字)
         TYPE_HEX_LOWER = 'h'.freeze     # 16進数(小文字)
@@ -97,6 +99,10 @@ private
         case type
         when TokenType::TYPE_PERCENT then
             wordList = ('%').to_a
+        when TokenType::TYPE_BIT then
+            wordList = ('0'..'1').to_a
+        when TokenType::TYPE_OCTAL then
+            wordList = ('0'..'7').to_a
         when TokenType::TYPE_DIGIT then
             wordList = ('0'..'9').to_a
         when TokenType::TYPE_HEX_UPPER then

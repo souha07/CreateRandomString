@@ -16,6 +16,8 @@ class StringToken
         TYPE_MARK = 'm'.freeze          # 記号
         TYPE_MARK_DETAIL = 'M'.freeze   # 記号(詳細)
         TYPE_STRING = 's'.freeze        # 0-9 + A-Z + a-Z
+        TYPE_HIRA_1 = 'hira-1'.freeze   # ひらがな(あ-ん）
+        
 
         def self.all
             self.constants.map{ |type| eval("#{type}") }
@@ -115,8 +117,50 @@ private
             wordList = ( '!"#$%&\'=~|-^\@;:/\`+*?_' ).split("") + ( "(){}[]<>" ).split("")
         when TokenType::TYPE_STRING then
             wordList = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a
+        when TokenType::TYPE_HIRA_1 then
+            wordList = GetWordListHiragana( false, false, false )
         else
             puts "定義されていない識別子が指定されています #{word}"
+        end
+
+        return wordList
+    end
+
+    # ひらがなリストの取得
+    def GetWordListHiragana( isDakuten, isHanDakuten, isKomoji )
+
+        # 通常文字(あ-ん)
+        wordList = Array.new()
+        wordList += ('あいうえお').split("")
+        wordList += ('かきくけこ').split("")
+        wordList += ('さしすせそ').split("")
+        wordList += ('たちつてと').split("")
+        wordList += ('なにぬねの').split("")
+        wordList += ('はひふへほ').split("")
+        wordList += ('まみむめも').split("")
+        wordList += ('やゆよ').split("")
+        wordList += ('らりるれろ').split("")
+        wordList += ('わをん').split("")
+
+        # 濁点(が-ぼ)
+        if isDakuten then
+            wordList += ('がぎぐげご').split("")
+            wordList += ('ざじずぜぞ').split("")
+            wordList += ('だぢづでど').split("")
+            wordList += ('ばびぶべぼ').split("")
+        end
+
+        # 半濁点
+        if isHanDakuten then
+            wordList += ('ぱぴぷぺぽ').split("")
+        end
+
+        # 小文字
+        if isKomoji then
+            wordList += ('ぁぃぅぇぉ').split("")
+            wordList += ('ゃゅょ').split("")
+            wordList += ('ゎ').split("")
+            wordList += ('っ').split("")
         end
 
         return wordList
